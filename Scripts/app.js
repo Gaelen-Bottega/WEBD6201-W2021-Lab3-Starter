@@ -1,4 +1,6 @@
-/* custom JavaScript goes here */
+// Gaelen Rhoads
+// 100804776  
+// 04/1/2022
 
 //IIFE - Immediately Invoked Function Expression
 //AKA - Anonymous Self-Executing Function
@@ -16,7 +18,7 @@
     function loadHeader(pageName)
     {
       // inject the Header
-      $.get("./Views/components/header.html", function(data)
+      $.get("../Views/components/header.html", function(data)
       {
         $("header").html(data); // load the navigation bar
 
@@ -54,7 +56,7 @@
     function loadContent(pageName, callback)
     {
       // inject content
-      $.get(`./Views/content/${pageName}.html`, function(data)
+      $.get(`../Views/content/${pageName}.html`, function(data)
       {
         $("main").html(data);
 
@@ -63,35 +65,53 @@
       
     }
 
+  /**
+   * loads footer dynamically
+   */
     function loadFooter()
     {
       // inject the Footer
-      $.get("./Views/components/footer.html", function(data)
+      $.get("../Views/components/footer.html", function(data)
       {
         $("footer").html(data);
       });
     }
 
+    /**
+     * display home
+     */
     function displayHome()
     {
         
     }
 
+    /**
+     * display about
+     */
     function displayAbout()
     {
-
+      
     }
 
+    /**
+     * display projects
+     */
     function displayProjects()
     {
 
     }
 
+    /**
+     * display services
+     */
     function displayServices()
     {
 
     }
 
+    /**
+     * validation function for full name
+     */
     function testFullName()
     {
       let messageArea = $("#messageArea").hide();
@@ -112,6 +132,9 @@
         });
     }
 
+    /**
+     * validation function for contact number
+     */
     function testContactNumber()
     {
       let messageArea = $("#messageArea");
@@ -131,6 +154,9 @@
         });
     }
 
+    /**
+     * validation function for email
+     */
     function testEmailAddress()
     {
       let messageArea = $("#messageArea");
@@ -150,6 +176,9 @@
         });
     }
 
+    /**
+     * calls all validation functions
+     */
     function formValidation()
     {
       testFullName();
@@ -157,6 +186,9 @@
       testEmailAddress();
     }
 
+    /**
+     * display contact form
+     */
     function displayContact()
     {
       // form validation
@@ -178,6 +210,9 @@
         });
     }
 
+    /**
+     * display contact list
+     */
     function displayContactList() 
     {
       // don't allow visitors to go here
@@ -234,6 +269,9 @@
       }
     }
 
+    /**
+     * display edit
+     */
     function displayEdit()
     {
       let key = location.hash.substring(1);
@@ -367,11 +405,17 @@
       });
     }
 
+    /**
+     * display register
+     */
     function displayRegister()
     {
 
     }
 
+    /**
+     * toggle the navbar links when a user is logged in
+     */
     function toggleLogin()
     {
       // if user is logged in
@@ -399,7 +443,11 @@
        
         $(`<li class="nav-item">
         <a id="contact-list" class="nav-link" aria-current="page"><i class="fas fa-users fa-lg"></i> Contact List</a>
-      </li>`).insertBefore("#loginListItem");
+        </li>`).insertBefore("#loginListItem");
+
+        $(`<li class="nav-item">
+          <a id="task-list" class="nav-link" aria-current="page"><i class="fas fa-tasks fa-lg"></i> Task List</a>
+        </li>`).insertBefore("#loginListItem");
       }
       else
       {
@@ -410,6 +458,9 @@
       }
     }
 
+    /**
+     * protects againt users that arent logged in from accessing certain pages
+     */
     function authGuard()
     {
       if(!sessionStorage.getItem("user"))
@@ -424,6 +475,11 @@
 
     }
 
+    /**
+     * assigns callback functions
+     * @param {activelink} activeLink 
+     * @returns page
+     */
     function ActiveLinkCallBack(activeLink)
     {
       switch (activeLink) 
@@ -434,6 +490,8 @@
         case "services": return displayServices;
         case "contact": return displayContact;
         case "contact-list": return displayContactList;
+        // Assigning display task list to callback function
+        case "task-list": return DisplayTaskList;
         case "edit": return displayEdit;
         case "login": return displayLogin;
         case "register": return displayRegister;
@@ -451,7 +509,7 @@
     {
       let messageArea = $("#messageArea");
       messageArea.hide();
-      let taskInput = $("#taskTextInput");
+      let taskInput = $("#taskText");
 
       if (taskInput.val() != "" && taskInput.val().charAt(0) != " ") 
       {
@@ -482,6 +540,9 @@
      */
     function DisplayTaskList()
     {
+      // don't let someone access this page unless logged in
+        authGuard();
+
         let messageArea = $("#messageArea");
         messageArea.hide();
         let taskInput = $("#taskTextInput");
@@ -533,6 +594,9 @@
         });
     }
 
+    /**
+     * start
+     */
     function Start()
     {
         console.log("App Started...");
